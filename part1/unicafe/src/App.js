@@ -8,24 +8,45 @@ const Header = ({ text }) => {
   return <h1>{text}</h1>;
 };
 
+const StatisticLine = ({ text, value }) => {
+  const average = (value["good"] - value["bad"]) / value["all"];
+  const positive = value["all"] !== 0 ? `${(value["good"] / value["all"]) * 100} %` : "0 %";
+  if (text == "average") {
+    return (
+      <tr>
+        <td>
+          {text}: {average}
+        </td>
+      </tr>
+    );
+  }
+  if (text == "positive") {
+    return (
+      <tr>
+        <td>
+          {text}: {positive}
+        </td>
+      </tr>
+    );
+  }
+  return (
+    <tr>
+      <td>
+        {text}: {value[text]}
+      </td>
+    </tr>
+  );
+};
+
 const Statistic = ({ props }) => {
   return props["all"] ? (
     <>
-      {Object.keys(props).map((opinion) => {
-        return (
-          <tr>
-            <td>
-              {opinion}: {props[opinion]}
-            </td>
-          </tr>
-        );
-      })}
-      <tr>
-        <td>average: {(props["good"] - props["bad"]) / props["all"]}</td>
-      </tr>
-      <tr>
-        <td>positive: {props["all"] !== 0 ? `${(props["good"] / props["all"]) * 100} %` : "0 %"}</td>
-      </tr>
+      <StatisticLine text="good" value={props} />
+      <StatisticLine text="neutral" value={props} />
+      <StatisticLine text="bad" value={props} />
+      <StatisticLine text="all" value={props} />
+      <StatisticLine text="average" value={props} />
+      <StatisticLine text="positive" value={props} />
     </>
   ) : (
     <span>No feedback given</span>
