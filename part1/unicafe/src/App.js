@@ -8,42 +8,52 @@ const Header = ({ text }) => {
   return <h1>{text}</h1>;
 };
 
-const Statistic = ({ text, value }) => {
+const Statistic = ({ props }) => {
   return (
-    <tr>
-      <td>
-        {text}: {value}
-      </td>
-    </tr>
+    <>
+      {Object.keys(props).map((opinion) => {
+        return (
+          <tr>
+            <td>
+              {opinion}: {props[opinion]}
+            </td>
+          </tr>
+        );
+      })}
+      <tr>
+        <td>average: {(props["good"] - props["bad"]) / props["all"]}</td>
+      </tr>
+      <tr>
+        <td>positive: {props["all"] !== 0 ? `${(props["good"] / props["all"]) * 100} %` : "0 %"}</td>
+      </tr>
+    </>
   );
 };
 
 const App = () => {
   // save clicks of each button to its own state
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
-  const [sum, setSum] = useState(0);
-
+  const [stats, setStats] = useState({
+    good: 0,
+    neutral: 0,
+    bad: 0,
+    all: 0,
+  });
   const handleGoodClick = () => {
-    let goodValue = good + 1;
-    setGood(goodValue);
-    let newSum = sum + 1;
-    setSum(newSum);
+    const goodValue = stats.good + 1;
+    const sumValue = stats.all + 1;
+    setStats({ ...stats, good: goodValue, all: sumValue });
   };
 
   const handleNeutralClick = () => {
-    let neutralValue = neutral + 1;
-    setNeutral(neutralValue);
-    let newSum = sum + 1;
-    setSum(newSum);
+    const neutralValue = stats.neutral + 1;
+    const sumValue = stats.all + 1;
+    setStats({ ...stats, neutral: neutralValue, all: sumValue });
   };
 
   const handleBadClick = () => {
-    let badValue = bad + 1;
-    setBad(badValue);
-    let newSum = sum + 1;
-    setSum(newSum);
+    let badValue = stats.bad + 1;
+    const sumValue = stats.all + 1;
+    setStats({ ...stats, bad: badValue, all: sumValue });
   };
 
   return (
@@ -53,12 +63,7 @@ const App = () => {
       <Button onClick={handleNeutralClick} reaction="NEUTRAL"></Button>
       <Button onClick={handleBadClick} reaction="BAD"></Button>
       <Header text="Statistic" />
-      <Statistic text="good" value={good} />
-      <Statistic text="neutral" value={neutral} />
-      <Statistic text="bad" value={bad} />
-      <Statistic text="all" value={good + neutral + bad} />
-      <Statistic text="average" value={(good + neutral + bad) / 3} />
-      <Statistic text="positive" value={good > 0 ? `${(good / sum) * 100}%` : `0%`} />
+      <Statistic props={stats} />
     </>
   );
 };
