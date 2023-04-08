@@ -14,26 +14,23 @@ const StatisticLine = ({ text, value }) => {
   if (text == "average") {
     return (
       <tr>
-        <td>
-          {text}: {average}
-        </td>
+        <td>{text}: </td>
+        <td>{average}</td>
       </tr>
     );
   }
   if (text == "positive") {
     return (
       <tr>
-        <td>
-          {text}: {positive}
-        </td>
+        <td>{text}: </td>
+        <td>{positive}</td>
       </tr>
     );
   }
   return (
     <tr>
-      <td>
-        {text}: {value[text]}
-      </td>
+      <td>{text}: </td>
+      <td>{value[text]}</td>
     </tr>
   );
 };
@@ -41,12 +38,16 @@ const StatisticLine = ({ text, value }) => {
 const Statistic = ({ props }) => {
   return props["all"] ? (
     <>
-      <StatisticLine text="good" value={props} />
-      <StatisticLine text="neutral" value={props} />
-      <StatisticLine text="bad" value={props} />
-      <StatisticLine text="all" value={props} />
-      <StatisticLine text="average" value={props} />
-      <StatisticLine text="positive" value={props} />
+      <table>
+        <tbody>
+          <StatisticLine text="good" value={props} />
+          <StatisticLine text="neutral" value={props} />
+          <StatisticLine text="bad" value={props} />
+          <StatisticLine text="all" value={props} />
+          <StatisticLine text="average" value={props} />
+          <StatisticLine text="positive" value={props} />
+        </tbody>
+      </table>
     </>
   ) : (
     <span>No feedback given</span>
