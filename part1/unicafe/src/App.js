@@ -9,7 +9,7 @@ const Header = ({ text }) => {
 };
 
 const Statistic = ({ props }) => {
-  return (
+  return props["all"] ? (
     <>
       {Object.keys(props).map((opinion) => {
         return (
@@ -27,6 +27,8 @@ const Statistic = ({ props }) => {
         <td>positive: {props["all"] !== 0 ? `${(props["good"] / props["all"]) * 100} %` : "0 %"}</td>
       </tr>
     </>
+  ) : (
+    <span>No feedback given</span>
   );
 };
 
