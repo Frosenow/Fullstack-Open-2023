@@ -10,10 +10,19 @@ const App = () => {
 
   function handleForm(e) {
     e.preventDefault();
-    const names = {
-      name: newName,
-    };
-    setPersons(persons.concat(names));
+    if (
+      persons.every(
+        (person) => person.name.toLowerCase() !== newName.toLowerCase()
+      )
+    ) {
+      const names = {
+        name: newName,
+      };
+      setPersons(persons.concat(names));
+    } else {
+      alert(`${newName} is already added to phonebook`);
+    }
+
     setNewName("");
   }
 
