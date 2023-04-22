@@ -1,7 +1,8 @@
-export default function Person({ person }) {
+export default function Person({ person, deletePerson }) {
   return (
     <li>
       {person.name} {person.number}
+      <button onClick={deletePerson}>delete</button>
     </li>
   );
 }

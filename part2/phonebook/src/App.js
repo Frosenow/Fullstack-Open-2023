@@ -71,7 +71,11 @@ const App = () => {
         newNumber={newNumber}
       />
       <h2>Numbers</h2>
-      <Persons filterPersons={filterPersons} />
+      <Persons
+        filterPersons={filterPersons}
+        updatePersons={setPersons}
+        updateFilterPersons={setFilterPersons}
+      />
     </div>
   );
 };
