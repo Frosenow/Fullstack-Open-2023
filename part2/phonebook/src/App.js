@@ -43,7 +43,20 @@ const App = () => {
         setFilterPersons(persons.concat(personReturned));
       });
     } else {
-      alert(`${newName} is already added to phonebook`);
+      if (
+        window.confirm(
+          `${newName} is already in the phonebook, do you want to add it anyway?`
+        )
+      ) {
+        const personUpdate = persons.filter((person) => person.name == newName);
+        const updated = { ...personUpdate[0], number: newNumber };
+        personService.replace(personUpdate[0].id, updated).then(() => {
+          const updatedPersons = personService.getAll().then((persons) => {
+            setPersons(persons);
+            setFilterPersons(persons);
+          });
+        });
+      }
     }
     setNewName("");
     setNewNumber("");

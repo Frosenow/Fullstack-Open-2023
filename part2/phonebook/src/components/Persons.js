@@ -16,7 +16,6 @@ export default function Persons({
     ) {
       personService.remove(id).then((removed) => {
         const persons = filterPersons.filter((person) => person.id !== id);
-        console.log(persons);
         updatePersons(persons);
         updateFilterPersons(persons);
       });
